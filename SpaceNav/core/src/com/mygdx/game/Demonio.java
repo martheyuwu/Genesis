@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Demonio extends Enemigos{
+public abstract class Demonio extends Enemigos{
 	
     
 	public Demonio(int x, int y, Texture tx, int vidas, int xSpeed, int ySpeed,int size) {
@@ -47,20 +47,14 @@ public class Demonio extends Enemigos{
 	    	return spr.getBoundingRectangle();
 	    }
 	 
-	 public void update(int michahelx,int michahely, int ronda) {
-		 //System.out.print(this.xSpeed);
-		// System.out.print(this.ySpeed);
-		 if (ronda ==1 )
-			 Seguir(michahelx,michahely);
-		 if (ronda == 2)
-			 Patron(xSpeed, ySpeed);
+	 public void update() {
+		
 	  }
 
-	 public void draw(SpriteBatch batch, PantallaJuego juego) {
-
-		 		spr.draw(batch);
+	 public void draw(SpriteBatch batch) {
+	    	spr.draw(batch);
+	    	
 	 }
-
 
 	
 }

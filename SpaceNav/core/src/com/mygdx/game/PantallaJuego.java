@@ -20,19 +20,30 @@ public class PantallaJuego implements Screen {
 	private Music gameMusic;
 	private int score;
 	private int ronda;
-	private int cantDemonios;
-
-
 	private Michahel michahel;
-	private  ArrayList<Demonio> balls1 = new ArrayList<>();
+	private  ArrayList<DemonioSeguimiento> balls1 = new ArrayList<>();
+	private  ArrayList<DemonioAleatorio> balls2 = new ArrayList<>();
+	private  ArrayList<DemonioDisparo> balls3 = new ArrayList<>();
 	private  ArrayList<Bullet> balas = new ArrayList<>();
+	private  ArrayList<Bullet> balas2 = new ArrayList<>();
+	Niveles level = new Niveles();
+	
+	
 
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 
 	public PantallaJuego(SpaceNavigation game, int ronda, int vidas, int score) {
 		this.game = game;
 		this.ronda = ronda;
 		this.score = score;
-		batch = game.getBatch();
+		setBatch(game.getBatch());
 		camera = new OrthographicCamera();	
 		camera.setToOrtho(false, 800, 640);
 		//inicializar assets; musica de fondo y efectos de sonido
@@ -46,102 +57,66 @@ public class PantallaJuego implements Screen {
 	     michahel = new Michahel (Gdx.graphics.getWidth()/2-50, 30, 
 	    		 new Texture(Gdx.files.internal("MainShip3.png")),3,false, false);
         // Create Demons
-        Random r = new Random();
-        if (ronda == 1)
-        	cantDemonios = 3;
-        if (ronda == 2)
-        	cantDemonios = 7;
-        if (ronda == 3)
-        	cantDemonios = 12; 
-	    for (int i = 0; i < cantDemonios; i++) {
-	        Demonio bb = new Demonio(r.nextInt((int)Gdx.graphics.getWidth()),r.nextInt((int)Gdx.graphics.getHeight() - (int)Gdx.graphics.getHeight()/2 +1) + 
-	        		(int)Gdx.graphics.getHeight()/2,
-	        		new Texture(Gdx.files.internal("aGreyMedium4.png")),1, 2, 0,
-	  	            20+r.nextInt(10));
-	  	    balls1.add(bb);
-	  	  //System.out.print(balls1.get(0).xSpeed);
-	  	    
+	     if (ronda == 1) {
+	    	 Random r = new Random();
+	 	    for (int i = 0; i < (8); i++) {
+	 	        if ((i)%2 == 0) {
+	 	        	DemonioSeguimiento bb = new DemonioSeguimiento(r.nextInt((int)Gdx.graphics.getWidth()), r.nextInt(Gdx.graphics.getHeight()+1 - (Gdx.graphics.getHeight()/2)) + (Gdx.graphics.getHeight()/2) ,
+		 	        		new Texture(Gdx.files.internal("aGreyMedium4.png")),1,0,0,0);
+	 	        	balls1.add(bb);
+		 	  	    
+	 	        }else {
+	 	        	DemonioAleatorio bb = new DemonioAleatorio(r.nextInt((int)Gdx.graphics.getWidth()),r.nextInt(Gdx.graphics.getHeight()+1 - (Gdx.graphics.getHeight()/2)) + (Gdx.graphics.getHeight()/2),
+		 	        		new Texture(Gdx.files.internal("aGreyMedium4.png")),1, 1+r.nextInt(4+4) + 1, 1+r.nextInt(4+4)-10,
+		 	  	            20+r.nextInt(10));
+	 	        	
+	 	        	balls2.add(bb);
+	 	        }
+	 	       
+	 	    }
+	  	}else if (ronda == 2) {
+	  		for (int i =0; i < 12; i++) {
+	  			DemonioDisparo bb = new DemonioDisparo(((Gdx.graphics.getWidth()/12)*(i+1) - 50), Gdx.graphics.getHeight() - 100, new Texture(Gdx.files.internal("aGreyMedium4.png")),
+	  					1, 5 , 1, 1);
+	  			balls3.add(bb);
+	  		}
+	  		
 	  	}
+	     
 	}
     
 	public void dibujaEncabezado() {
 		CharSequence str = "Vidas: "+michahel.getVidas()+" Ronda: "+ronda;
 		game.getFont().getData().setScale(2f);		
-		game.getFont().draw(batch, str, 10, 30);
-		game.getFont().draw(batch, "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
-		game.getFont().draw(batch, "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
+		game.getFont().draw(getBatch(), str, 10, 30);
+		game.getFont().draw(getBatch(), "Score:"+this.score, Gdx.graphics.getWidth()-150, 30);
+		game.getFont().draw(getBatch(), "HighScore:"+game.getHighScore(), Gdx.graphics.getWidth()/2-100, 30);
 	}
 	@Override
 	public void render(float delta) {
-		  Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-          batch.begin();
-		  dibujaEncabezado();
-	      if (!michahel.estaHerido()) {
-		      // colisiones entre balas y asteroides y su destruccion  
-	    	  for (int i = 0; i < balas.size(); i++) {
-		            Bullet b = balas.get(i);
-		            b.update();
-		            for (int j = 0; j < balls1.size(); j++) { 
-		              if (b.checkCollision(balls1.get(j))) {          
-		            	 balls1.remove(j);
-		            	 j--;
-		            	 score +=10;
-		              }   	  
-		  	        }
-		                
-		         //   b.draw(batch);
-		            if (b.isDestroyed()) {
-		            	
-		                balas.remove(b);
-		                i--; //para no saltarse 1 tras eliminar del arraylist
-		            }
-		      }
-		      //actualizar movimiento de asteroides dentro del area
-	    	  
-		      for (Demonio ball : balls1) {
-		          ball.update(michahel.getX(),michahel.getY(),ronda);
-		      }
-	      }
-	      //dibujar balas
-	     for (Bullet b : balas) {
-	          b.draw(batch);
-	      }
-	      michahel.draw(batch, this);
-	      //dibujar asteroides y manejar colision con nave
-	      for (int i = 0; i < balls1.size(); i++) {
-	    	    Demonio b=balls1.get(i);
-	    	    b.draw(batch,this);
-		          //perdió vida o game over
-	              if (michahel.checkCollision(b)) {
-		            //asteroide se destruye con el choque             
-	            	 balls1.remove(i);
-	            	 i--;
-              }   	  
-  	        }
-	      
-	      if (michahel.estaMuerto()) {
-	    	  
-  			if (score > game.getHighScore())
-  				game.setHighScore(score);
-	    	Screen ss = new PantallaGameOver(game);
-  			ss.resize(1200, 800);
-  			game.setScreen(ss);
-  			dispose();
-  		  }
-	      batch.end();
-	      //nivel completado
-	      if (balls1.size()==0) { 
-	    	
-			Screen ss = new PantallaJuego(game,ronda+1, michahel.getVidas(), score);
-			ss.resize(1200, 800);
-			game.setScreen(ss);
-			dispose();
-		  }
+		
+		
+		
+		if (ronda == 1) {
+			level.levelOne(michahel, balas, balls1, balls2, getScore(), getBatch(),game, this);
+		}
+		if (ronda == 2) {
+			level.levelTwo(michahel, balas, balls3, getScore(), getBatch(),game, this);
+		}
+		if (ronda == 3) {
+			
+		}
+		  
+		  
 	    	 
 	}
     
     public boolean agregarBala(Bullet bb) {
     	return balas.add(bb);
+    }
+    
+    public boolean agregarBalaE(Bullet bb) {
+    	return balas2.add(bb);
     }
 	
 	@Override
@@ -179,7 +154,13 @@ public class PantallaJuego implements Screen {
 		// TODO Auto-generated method stub
 		this.gameMusic.dispose();
 	}
-	public int getRonda() {
-		return ronda;
+
+	public SpriteBatch getBatch() {
+		return batch;
 	}
+
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
+   
 }

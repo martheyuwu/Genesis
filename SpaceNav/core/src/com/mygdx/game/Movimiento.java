@@ -4,9 +4,12 @@ public interface Movimiento {
 	
 	public void PorTeclado();
 
-	void Seguir(int getXSpeed, int getySpeed);
-	
-	void Patron(int xspeed,int yspeed);
+	public void Aleatorio(int getXSpeed, int getySpeed);
 
-	void MovBoss(int xSpeed);
+	public void MovBoss(int xSpeed);
+
+	public void seguir(int michx, int michy);
+
+	void patron(int x, int y, int xSpeed, DemonioDisparo disparo);
+
 }

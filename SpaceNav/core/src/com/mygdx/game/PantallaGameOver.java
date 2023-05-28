@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 
+
 public class PantallaGameOver implements Screen {
 
 	private SpaceNavigation game;

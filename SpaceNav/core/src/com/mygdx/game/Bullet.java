@@ -10,7 +10,6 @@ public class Bullet {
 
 	private int xSpeed;
 	private int ySpeed;
-	private boolean segunda;
 	private boolean destroyed = false;
 	private Sprite spr;
 	    

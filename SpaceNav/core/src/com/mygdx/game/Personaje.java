@@ -50,46 +50,35 @@ public abstract class Personaje implements Movimiento, Disparar{
 		
 	}
 	@Override
-	public void Seguir(int michx, int michy) {
-		float speed = 1.3f;
+	public void Aleatorio(int getXSpeed, int getySpeed) {
+		x += getXSpeed;
+        y += getySpeed;
+
+
+		if (x < 0) {
+			x = Gdx.graphics.getWidth();
+		}
+		if (x > Gdx.graphics.getWidth()) {
+			x = 0;
+		}
+
+		if (y < 0) {
+			y = Gdx.graphics.getHeight();
+		}
+		if (y > Gdx.graphics.getHeight()) {
+			y = 0;
+		} 
 		
-		if (this.x < michx) 
-            this.x += speed; 
-		else if (this.x > michx) 
-            this.x -= speed;
-        
-        if (this.y < michy) 
-            this.y += speed;
-        else if (this.y > michy) 
-            this.y -= speed;
-        
-        
-        spr.setPosition(this.x, this.y);
+		spr.setPosition(x, y);
+		
 	}
-	
-	@Override
-	public void Patron(int xSpeed, int ySpeed) {
-	    x += xSpeed; 
-
-	    if (x + spr.getWidth() > Gdx.graphics.getWidth()) {
-	        xSpeed *= -1; 
-	    }
-
-	    if (x < 0) {
-	        xSpeed *= -1; 
-	    }
-	    
-	    spr.setPosition(x, 600); 
-	}
-
-
 	@Override
 	public void PorTecladoD(PantallaJuego juego) {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {         
 	          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,10,
 	        		  new Texture(Gdx.files.internal("Rocket2.png")));
 	          juego.agregarBala(bala);
-	    }
+	        }
 	}
 	@Override
 	public void Doble() {
@@ -97,10 +86,50 @@ public abstract class Personaje implements Movimiento, Disparar{
 	}
 	@Override
 	public void Normal(PantallaJuego juego) {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {         
-	          Bullet  bala = new Bullet(spr.getX()+spr.getWidth()/2-5,spr.getY()+ spr.getHeight()-5,0,10,
-	        		  new Texture(Gdx.files.internal("Rocket2.png")));
-	          juego.agregarBala(bala);
-	    }
+		if ((Gdx.input.isKeyJustPressed(Input.Keys.L))){
+			Bullet bala =new Bullet(spr.getOriginX(),spr.getOriginY(),0,-10,new Texture(Gdx.files.internal("Rocket2.png")));
+			juego.agregarBalaE(bala);
+		}
+		
+	}
+	
+	@Override
+	public void seguir(int michx, int michy) {
+		float speed = 1.3f;
+		
+		if (x < michx) 
+            x += speed; 
+		else if (this.x > michx) 
+            x -= speed;
+        
+        if (this.y < michy) 
+            y += speed;
+        else if (this.y > michy) 
+            y -= speed;
+        
+        
+        spr.setPosition(this.x, this.y);
+		
+	}
+	@Override
+	public void patron(int x,int y, int xSpeed, DemonioDisparo disparo) {
+		
+		// Changes in x axis
+		this.x += xSpeed;
+		
+		if (this.x + spr.getWidth() > Gdx.graphics.getWidth()) {
+			this.x -= xSpeed;
+			disparo.setxSpeed(-xSpeed);
+			this.y -=30;
+		}
+		
+		// Changes in y axis
+		if (this.x < 0) {
+			this.x -= xSpeed;
+			disparo.setxSpeed(-xSpeed);
+			this.y -= 30;
+		}
+		
+		spr.setPosition(this.x, this.y);
 	}
 }

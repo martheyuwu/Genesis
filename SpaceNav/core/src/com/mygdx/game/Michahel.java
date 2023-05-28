@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -10,6 +9,7 @@ public class Michahel extends Personaje{
 	
 	public Michahel(int x, int y, Texture tx, int vidas,boolean herido,boolean muerto) {
 		super (x,y,tx,vidas);
+		vidas = 3;
 	}
 	public boolean estaMuerto(){
 		return !herido && muerto;
@@ -60,6 +60,7 @@ public class Michahel extends Personaje{
         }
         return false;
     }
+
 	
 	
 	
