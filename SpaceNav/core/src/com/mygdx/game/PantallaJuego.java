@@ -77,7 +77,7 @@ public class PantallaJuego implements Screen {
 	  	}else if (ronda == 2) {
 	  		for (int i =0; i < 12; i++) {
 	  			DemonioDisparo bb = new DemonioDisparo(((Gdx.graphics.getWidth()/12)*(i+1) - 50), Gdx.graphics.getHeight() - 100, new Texture(Gdx.files.internal("aGreyMedium4.png")),
-	  					1, 5 , 1, 1);
+	  					1, 5 , 1, 1,0);
 	  			balls3.add(bb);
 	  		}
 	  		
@@ -101,10 +101,10 @@ public class PantallaJuego implements Screen {
 			level.levelOne(michahel, balas, balls1, balls2, getScore(), getBatch(),game, this);
 		}
 		if (ronda == 2) {
-			level.levelTwo(michahel, balas, balls3, getScore(), getBatch(),game, this);
+			level.levelTwo(michahel, balas, balas2, balls3, getScore(), getBatch(),game, this);
 		}
 		if (ronda == 3) {
-			
+			level.levelTwo(michahel, balas, balas2, balls3, getScore(), getBatch(),game, this);
 		}
 		  
 		  

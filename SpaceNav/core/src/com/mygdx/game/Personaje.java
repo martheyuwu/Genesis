@@ -86,16 +86,14 @@ public abstract class Personaje implements Movimiento, Disparar{
 	}
 	@Override
 	public void Normal(PantallaJuego juego) {
-		if ((Gdx.input.isKeyJustPressed(Input.Keys.L))){
-			Bullet bala =new Bullet(spr.getOriginX(),spr.getOriginY(),0,-10,new Texture(Gdx.files.internal("Rocket2.png")));
+			Bullet bala = new Bullet( spr.getX() + spr.getOriginX(),spr.getY() + spr.getOriginY(),0,-10,new Texture(Gdx.files.internal("Rocket2.png")));
 			juego.agregarBalaE(bala);
-		}
 		
 	}
 	
 	@Override
 	public void seguir(int michx, int michy) {
-		float speed = 1.3f;
+		float speed = 2f;
 		
 		if (x < michx) 
             x += speed; 
@@ -115,19 +113,21 @@ public abstract class Personaje implements Movimiento, Disparar{
 	public void patron(int x,int y, int xSpeed, DemonioDisparo disparo) {
 		
 		// Changes in x axis
-		this.x += xSpeed;
+		this.x += xSpeed*2;
 		
 		if (this.x + spr.getWidth() > Gdx.graphics.getWidth()) {
 			this.x -= xSpeed;
 			disparo.setxSpeed(-xSpeed);
-			this.y -=30;
+			this.y -=50;
 		}
-		
+		if (this.y < 0) {
+			this.y = Gdx.graphics.getHeight() - 100;
+		}
 		// Changes in y axis
 		if (this.x < 0) {
 			this.x -= xSpeed;
 			disparo.setxSpeed(-xSpeed);
-			this.y -= 30;
+			this.y -= 50;
 		}
 		
 		spr.setPosition(this.x, this.y);

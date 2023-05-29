@@ -48,7 +48,6 @@ public class Michahel extends Personaje{
 	
 	public boolean checkCollision(Demonio b) {
         if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
-        	
         	//actualizar vidas y herir
             vidas--;
             herido = true;
@@ -61,7 +60,19 @@ public class Michahel extends Personaje{
         return false;
     }
 
-	
+	public boolean checkCollision(Bullet b) {
+        if(!herido && b.getArea().overlaps(spr.getBoundingRectangle())){
+        	//actualizar vidas y herir
+            vidas--;
+            herido = true;
+  		    tiempoHerido=tiempoHeridoMax;
+  		    
+            if (vidas<=0) 
+          	    muerto = true; 
+            return true;
+        }
+        return false;
+    }
 	
 	
 }

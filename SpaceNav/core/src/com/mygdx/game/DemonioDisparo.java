@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DemonioDisparo extends Demonio {
 	private int xSpeed;
-
-	public DemonioDisparo(int x, int y, Texture tx, int vidas, int xSpeed, int ySpeed, int size) {
+	private int disparar;
+	public DemonioDisparo(int x, int y, Texture tx, int vidas, int xSpeed, int ySpeed, int size,int disparar) {
 		super(x, y, tx, vidas, xSpeed, ySpeed, size);
 		this.xSpeed = xSpeed;
+		this.disparar = disparar;
 	}
 
 	@Override
@@ -26,7 +27,19 @@ public class DemonioDisparo extends Demonio {
 	
 	
 	public void draw(SpriteBatch batch, PantallaJuego juego) {
-		Normal(juego);
+		spr.draw(batch);
+		if (disparar  == 60) {
+			Normal(juego);
+			//System.out.println(disparar);
+			disparar++;
+		}
+		
+		if (disparar != 60) {
+			disparar++;
+		}
+		
+		if (disparar > 60)
+			disparar = 0;
 	}
 	
 	
