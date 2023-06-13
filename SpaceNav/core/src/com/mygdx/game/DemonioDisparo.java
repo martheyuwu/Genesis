@@ -30,16 +30,17 @@ public class DemonioDisparo extends Demonio {
 		spr.draw(batch);
 		if (disparar  == 60) {
 			Normal(juego);
-			//System.out.println(disparar);
 			disparar++;
 		}            
 		
-		if (disparar != 60) {
+		if (disparar <= 60) {
 			disparar++;
 		}
 		
-		if (disparar > 60)
+		if (disparar > 60) {
 			disparar = 0;
+		}
+		
 	}
 	
 	

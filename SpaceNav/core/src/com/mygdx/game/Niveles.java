@@ -4,7 +4,6 @@
 package com.mygdx.game;
 
 import java.util.ArrayList;
-import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,6 +21,8 @@ public class Niveles {
 
 	public void levelOne(Michahel michahel, ArrayList<Bullet> balas, ArrayList<DemonioSeguimiento> balls1,ArrayList<DemonioAleatorio> balls2,  int score,
 			SpriteBatch batch, SpaceNavigation game, PantallaJuego partida) {
+		
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
@@ -63,11 +64,18 @@ public class Niveles {
 		          ball1.update();
 		      }
 	      }
+		
+		
+		
 	      //dibujar balas
 	     for (Bullet b : balas) {       
 	          b.draw(batch);
 	      }
-	      michahel.draw(batch, partida );
+	      michahel.draw(batch, partida);
+	      
+			
+	      
+	      
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls1.size(); i++) {
 	    	    DemonioSeguimiento b=balls1.get(i);
@@ -77,7 +85,7 @@ public class Niveles {
 		            //asteroide se destruye con el choque             
 	            	 balls1.remove(i);
 	            	 i--;
-            }   	  
+	              }   	  
 	        }
 	      for (int i = 0; i < balls2.size(); i++) {
 	    	    DemonioAleatorio b=balls2.get(i);
@@ -87,8 +95,8 @@ public class Niveles {
 		            //asteroide se destruye con el choque             
 	            	 balls2.remove(i);
 	            	 i--;
-          }   	  
-	        }
+	              }   	  
+	       }
 	      
 	      if (michahel.estaMuerto()) {
 			if (score > game.getHighScore())
@@ -99,13 +107,14 @@ public class Niveles {
 			partida.dispose();
 		  }
 	      batch.end();
+	      //-------------------------listo-----------------------
 	      if (balls1.size()==0 && balls2.size()==0) { 
 		    	
 				Screen ss = new PantallaJuego(game,2, michahel.getVidas(), score);
 				ss.resize(1200, 800);
 				game.setScreen(ss);
 				partida.dispose();
-			  }
+	      }
 	}
 	
 	public void levelTwo(Michahel michahel, ArrayList<Bullet> balas, ArrayList<Bullet> balas2,  ArrayList<DemonioDisparo> balls3, int score,
@@ -150,27 +159,24 @@ public class Niveles {
 	     for (Bullet b : balas) {       
 	          b.draw(batch);
 	      }
-	     
-	     
+	     michahel.draw(batch, partida);
 	   //  Random r = new Random();
 	     
 	     for (Bullet b : balas2) {       
 	          b.draw(batch);
 	      }
 	     
-	      michahel.draw(batch, partida);
+	      
 	      //dibujar asteroides y manejar colision con nave
 	      for (int i = 0; i < balls3.size(); i++) {
 	    	  DemonioDisparo b = balls3.get(i);
 	    	  	b.draw(batch,partida);
-	    	  	
 		          //perdió vida o game over
 	              if (michahel.checkCollision(b)) {
 		            //asteroide se destruye con el choque             
 	            	 balls3.remove(i);
 	            	 i--;
 	              }   	  
-
           } 
 	      
 	      if (michahel.estaMuerto()) {

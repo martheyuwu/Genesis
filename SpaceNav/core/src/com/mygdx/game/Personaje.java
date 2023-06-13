@@ -87,8 +87,8 @@ public abstract class Personaje implements Movimiento, Disparar{
 	@Override
 	public void Normal(PantallaJuego juego) {
 			Bullet bala = new Bullet( spr.getX() + spr.getOriginX(),spr.getY() + spr.getOriginY(),0,-10,new Texture(Gdx.files.internal("Rocket2.png")));
-			juego.agregarBalaE(bala);
-		
+			juego.agregarBala(bala);
+		//
 	}	
 	@Override
 	public void seguir(int michx, int michy) {
