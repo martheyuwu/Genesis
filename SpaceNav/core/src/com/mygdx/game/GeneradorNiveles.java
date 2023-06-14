@@ -10,7 +10,9 @@ public abstract class GeneradorNiveles {
 	protected PantallaJuego partida;
 	protected Michahel michahel;
 	protected ArrayList<Bullet> balas;
+	protected ArrayList<Bullet> balas2;
 	protected SpaceNavigation game;
+	protected int vidas;
 	protected int score;
 	
 
@@ -22,7 +24,7 @@ public abstract class GeneradorNiveles {
         this.partida.dibujaEncabezado();
 		colisionBalas(michahel, balas);
 		dibujar();
-		colisionMichahel(michahel, balas);
+		colisionMichahel(michahel);
 		finalizar(partida.getRonda());
 		gameOver(game,score);
 	}
@@ -39,7 +41,7 @@ public abstract class GeneradorNiveles {
 	
 	public abstract void colisionBalas(Michahel michahel, ArrayList<Bullet> balas);
 		
-	public abstract void colisionMichahel(Michahel michahel, ArrayList<Bullet> balas);
+	public abstract void colisionMichahel(Michahel michahel);
 	public  void gameOver(SpaceNavigation game,int score) {
 		if (michahel.estaMuerto()) {
 			if (score > game.getHighScore())

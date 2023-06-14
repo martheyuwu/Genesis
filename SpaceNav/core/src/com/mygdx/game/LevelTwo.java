@@ -11,15 +11,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class LevelTwo extends GeneradorNiveles {
 	private Texture texture = new Texture(Gdx.files.internal("7.png"));
 	private ArrayList<DemonioDisparo> balls3 = new ArrayList<>();
-	private ArrayList<Bullet> balas2 = new ArrayList<>();
 	
-	public LevelTwo(SpriteBatch batch, PantallaJuego partida, Michahel michahel,ArrayList<Bullet> balas,SpaceNavigation game, int score) {
+	
+	public LevelTwo(SpriteBatch batch, PantallaJuego partida, Michahel michahel,ArrayList<Bullet> balas,SpaceNavigation game, int score, ArrayList<Bullet> balas2) {
 		this.batch = batch;
 		this.partida = partida;
 		this.michahel = michahel;
 		this.balas = balas;
 		this.game = game;
 		this.score = score;
+		this.balas2 = balas2;
 	}
 	
 
@@ -42,10 +43,11 @@ public class LevelTwo extends GeneradorNiveles {
 
 	@Override
 	public void dibujar() {
-		for (Bullet b : balas) {       
-	          b.draw(batch);
-	      }
 	     michahel.draw(batch, partida);
+	     for (int i = 0; i < balls3.size(); i++) {
+	    	  DemonioDisparo b = balls3.get(i);
+		      b.draw(batch, partida);
+       }
 		
 	}
 
@@ -86,13 +88,15 @@ public class LevelTwo extends GeneradorNiveles {
 		                i--; //para no saltarse 1 tras eliminar del arraylist
 		            }
 		      }
+
 	    	  for (int i = 0; i < balas2.size(); i++) {
 		            Bullet b = balas2.get(i);
 		            b.update(); 
 			         if (michahel.checkCollision(b)) {          
 			            	balas2.remove(i);
 			            	i--;
-			         }   	  
+			         }  
+			         b.draw(batch);
 		     }
 		      //actualizar movimiento de asteroides dentro del area
 	    	  
@@ -102,10 +106,9 @@ public class LevelTwo extends GeneradorNiveles {
 	}
 
 	@Override
-	public void colisionMichahel(Michahel michahel, ArrayList<Bullet> balas) {
+	public void colisionMichahel(Michahel michahel) {
 		for (int i = 0; i < balls3.size(); i++) {
 	    	  DemonioDisparo b = balls3.get(i);
-	    	  	b.draw(batch,partida);
 		          //perdió vida o game over
 	              if (michahel.checkCollision(b)) {
 		            //asteroide se destruye con el choque             

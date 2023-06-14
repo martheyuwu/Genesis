@@ -43,9 +43,6 @@ public class LevelOne extends GeneradorNiveles {
 	
 	@Override
 	public void dibujar() {
-		for (Bullet b : balas) {       
-	          b.draw(batch);
-	      }
 	      michahel.draw(batch, partida);
 	}
 	
@@ -84,7 +81,7 @@ public class LevelOne extends GeneradorNiveles {
 	      }
 	}
 	@Override
-	public void colisionMichahel(Michahel michahel, ArrayList<Bullet> balas) {
+	public void colisionMichahel(Michahel michahel) {
 		for (int i = 0; i < balls1.size(); i++) {
     	    DemonioSeguimiento b=balls1.get(i);
     	    b.draw(batch);

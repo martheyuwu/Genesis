@@ -20,7 +20,7 @@ public class PantallaJuego implements Screen {
 	private int ronda = 1;
 	private Michahel michahel;
 	private ArrayList<Bullet> balas = new ArrayList<>();
-	
+	private ArrayList<Bullet> balasD = new ArrayList<>();
 	private GeneradorNiveles generadorNiveles = null;
 	
 	public int getScore() {
@@ -48,13 +48,13 @@ public class PantallaJuego implements Screen {
 		
 	    // Load Michahel's image, 64x64   
 	     michahel = new Michahel (Gdx.graphics.getWidth()/2-50, 30, 
-	    		 new Texture(Gdx.files.internal("MainShip3.png")),3,false, false);
+	    		 new Texture(Gdx.files.internal("MainShip3.png")),vidas,false, false);
 	     
 	    // Load levels 
 	     if (ronda == 1) {
 	    	 generadorNiveles = new LevelOne(getBatch(), this, michahel, balas, game, ronda);
 	     } else if ( ronda == 2) {
-	    	 generadorNiveles = new LevelTwo(getBatch(), this, michahel, balas, game, ronda);
+	    	 generadorNiveles = new LevelTwo(getBatch(), this, michahel, balas, game, ronda, balasD);
 	     }
 	     generadorNiveles.generarDemonios();
 	}
@@ -76,6 +76,9 @@ public class PantallaJuego implements Screen {
 	public boolean agregarBala(Bullet bb) {
     	return balas.add(bb);
     }
+	public boolean agregarBalaD(Bullet bb) {
+		return balasD.add(bb);
+	}
 	public int getRonda() {
 		return ronda;
 	}

@@ -9,7 +9,6 @@ public class Michahel extends Personaje{
 	
 	public Michahel(int x, int y, Texture tx, int vidas,boolean herido,boolean muerto) {
 		super (x,y,tx,vidas);
-		vidas = 3;
 	}
 	public boolean estaMuerto(){
 		return !herido && muerto;
